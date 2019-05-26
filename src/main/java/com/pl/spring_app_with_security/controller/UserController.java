@@ -3,7 +3,6 @@ package com.pl.spring_app_with_security.controller;
 import com.pl.spring_app_with_security.data.entity.User;
 import com.pl.spring_app_with_security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,12 +15,10 @@ import java.security.Principal;
 public class UserController {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -37,8 +34,7 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerPagePOST(@ModelAttribute(value = "user") User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.save(user);
+        userService.registration(user);
         return "redirect:/login";
     }
 
