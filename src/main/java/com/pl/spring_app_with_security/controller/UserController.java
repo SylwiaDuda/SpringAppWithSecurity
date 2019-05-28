@@ -5,9 +5,7 @@ import com.pl.spring_app_with_security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -49,5 +47,20 @@ public class UserController {
     public String profilePage(Model m) {
         m.addAttribute("userlist", userService.findAll());
         return "users";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam  Integer id, Model m, Principal principal) {
+        String name = principal.getName();
+        User user = userService.findUserByLogin(name);
+        if (user.getId() == id) {
+            userService.deleteById(id);
+            return "redirect:/login";
+        } else {
+            userService.deleteById(id);
+            m.addAttribute("userlist", userService.findAll());
+            return "/users";
+        }
+
     }
 }

@@ -13,7 +13,7 @@
         <th>Nazwisko</th>
         <th>Login</th>
         <th>Zaszyfrowane hasło</th>
-        <th>Ususń użytkownika</th>
+
     </tr>
     </thead>
     <tbody>
@@ -23,6 +23,7 @@
         <td th:text="${user.surname}"></td>
         <td th:text="${user.login}"></td>
         <td th:text="${user.password}"></td>
+        <td> <a th:href="@{/delete?id=__${user.id}__}" >Usuń</a> </td>
     </tr>
     </tbody>
 </table>

@@ -5,6 +5,7 @@ import com.pl.spring_app_with_security.data.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,6 +34,11 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password));
         userDAO.save(user);
     }
+   //@Transactional
+     public void deleteById(int id){
+System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        userDAO.deleteById(id);
+     }
 
 
 }
